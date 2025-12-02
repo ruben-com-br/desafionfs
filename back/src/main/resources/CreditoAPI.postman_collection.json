@@ -1,0 +1,68 @@
+{
+  "info": {
+    "name": "Credito API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET Créditos por NFS-e",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/creditos/{{numeroNfse}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "creditos", "{{numeroNfse}}"]
+        },
+        "description": "Retorna uma lista de créditos constituídos com base no número da NFS-e"
+      },
+      "response": []
+    },
+    {
+      "name": "GET Detalhes do Crédito",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/creditos/credito/{{numeroCredito}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "creditos", "credito", "{{numeroCredito}}"]
+        },
+        "description": "Retorna os detalhes de um crédito constituído específico com base no número do crédito"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "numeroNfse",
+      "value": "7891011"
+    },
+    {
+      "key": "numeroCredito",
+      "value": "123456"
+    }
+  ]
+}
