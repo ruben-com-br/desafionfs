@@ -1,27 +1,61 @@
-# Desafionfs
+## Pré-requisitos
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+- Node.js v20.19.2 (para desenvolvimento local)
+- Docker instalado (para build e execução via container)
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Build da aplicação
 
-## Code scaffolding
+Para gerar a build de produção da aplicação Angular:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+npm install
+npm run build -- --configuration production
+```
 
-## Build
+A build será gerada na pasta `dist/consulta-credito/browser`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## Dockerização
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Este projeto possui um **Dockerfile** configurado para:
 
-## Running end-to-end tests
+1. Construir a aplicação Angular com Node.js.
+2. Servir os arquivos estáticos com Nginx.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+---
 
-## Further help
+## Como rodar com Docker
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Passos:
+
+1. Construir a imagem Docker:
+
+```bash
+docker build -t frontend .
+```
+
+2. Rodar o container, mapeando a porta 4200 para a porta 80 do container (Nginx):
+
+```bash
+docker run -p 4200:80 frontend
+```
+
+3. Acesse a aplicação no navegador em: [http://localhost:4200](http://localhost:4200)
+
+---
+
+## Observações
+
+- O Nginx está configurado para servir a aplicação na porta 80 dentro do container.
+- A porta 4200 está exposta para acesso local, pode ser alterada conforme necessidade.
+
+---
+
+## Contato
+
+Para dúvidas ou sugestões, abra uma issue ou entre em contato.
+
+---

@@ -1,0 +1,198 @@
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  h2 {
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+  }
+
+  input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 12px 30px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    min-width: 150px;
+  }
+
+  button:hover:not(:disabled) {
+    background: #0056b3;
+  }
+
+  button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  th {
+    background: #f8f9fa;
+    padding: 16px 12px;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    color: #495057;
+  }
+
+  td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  *ngIf="isLoading" {
+    padding: 15px;
+    text-align: center;
+    color: #666;
+  }
+
+  *ngIf="!isLoading && listaCreditos.length === 0 && detalhesCredito.length === 0" {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+    font-style: italic;
+  }
+</style>
+
+<div class="container">
+  <h2>Consulta de Créditos</h2>
+
+  <!-- Busca por Crédito -->
+  <div class="input-row">
+    <input
+      type="number"
+      placeholder="Número do Crédito"
+      [(ngModel)]="numeroCredito"
+      value="123456"
+    />
+    <button
+      type="button"
+      (click)="buscarPorCredito()"
+      [disabled]="isLoading"
+    >
+      Buscar Crédito
+    </button>
+  </div>
+
+  <!-- Busca por NFS-e -->
+  <div class="input-row">
+    <input
+      type="number"
+      placeholder="Número da NFS-e"
+      [(ngModel)]="numeroNfse"
+      value="123456"
+    />
+    <button
+      type="button"
+      (click)="buscarPorNfse()"
+      [disabled]="isLoading"
+    >
+      Buscar NFS-e
+    </button>
+  </div>
+
+  <div *ngIf="isLoading">Carregando...</div>
+
+  <!-- Tabela principal -->
+  <table *ngIf="listaCreditos.length > 0">
+    <thead>
+      <tr>
+        <th>Alíquota</th>
+        <th>Base cálculo</th>
+        <th>Data</th>
+        <th>Nº Crédito</th>
+        <th>Nº NFSE</th>
+        <th>Simples</th>
+        <th>Tipo</th>
+        <th>Valor dedução</th>
+        <th>Valor faturado</th>
+        <th>Valor ISSQN</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let c of listaCreditos">
+        <td>{{ c.aliquota }}</td>
+        <td>{{ c.baseCalculo.toFixed(2) }}</td>
+        <td>{{ c.dataConstituicao }}</td>
+        <td>{{ c.numeroCredito }}</td>
+        <td>{{ c.numeroNfse }}</td>
+        <td>{{ c.simplesNacional }}</td>
+        <td>{{ c.tipoCredito }}</td>
+        <td>{{ c.valorDeducao.toFixed(2) }}</td>
+        <td>{{ c.valorFaturado.toFixed(2) }}</td>
+        <td>{{ c.valorIssqn.toFixed(2) }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Detalhes -->
+  <table *ngIf="detalhesCredito.length > 0">
+    <thead>
+      <tr>
+        <th>Alíquota</th>
+        <th>Base cálculo</th>
+        <th>Data</th>
+        <th>Nº Crédito</th>
+        <th>Nº NFSE</th>
+        <th>Simples</th>
+        <th>Tipo</th>
+        <th>Valor dedução</th>
+        <th>Valor faturado</th>
+        <th>Valor ISSQN</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let d of detalhesCredito">
+        <td>{{ d.aliquota }}</td>
+        <td>{{ d.baseCalculo.toFixed(2) }}</td>
+        <td>{{ d.dataConstituicao }}</td>
+        <td>{{ d.numeroCredito }}</td>
+        <td>{{ d.numeroNfse }}</td>
+        <td>{{ d.simplesNacional }}</td>
+        <td>{{ d.tipoCredito }}</td>
+        <td>{{ d.valorDeducao.toFixed(2) }}</td>
+        <td>{{ d.valorFaturado.toFixed(2) }}</td>
+        <td>{{ d.valorIssqn.toFixed(2) }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!isLoading && listaCreditos.length === 0 && detalhesCredito.length === 0">
+    Nenhum resultado encontrado.
+  </div>
+</div>
